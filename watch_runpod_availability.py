@@ -81,7 +81,7 @@ if __name__ == "__main__":
     for gpu_type in GPU_TYPES:
       for data_center in DATA_CENTERS:
         print(f"Checking for {gpu_type} in {data_center}")
-        print(get_availability(gpu_type, data_center))
+        print(f"Availability: {get_availability(gpu_type, data_center)}")
         availability = get_availability(gpu_type, data_center)
         if availability >= ALERT_THRESHOLD:
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
