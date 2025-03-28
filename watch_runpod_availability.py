@@ -21,10 +21,23 @@ import requests
 import os
 import json
 import boto3
+from twilio.rest import Client
 
-SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:838892012396:RunpodWatcherTopic"
 
-sns = boto3.client('sns', region_name='us-east-1')
+# SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:838892012396:RunpodWatcherTopic"
+# sns = boto3.client('sns', region_name='us-east-1')
+ssm = boto3.client('ssm', region_name='us-east-1')
+
+account_sid = ssm.get_parameter(
+    Name='/runpod/twilio/account_sid',
+    WithDecryption=True
+)['Parameter']['Value']
+auth_token = ssm.get_parameter(
+    Name='/runpod/twilio/auth_token',
+    WithDecryption=True
+)['Parameter']['Value']
+
+twilio_client = Client(account_sid, auth_token)
 
 def get_availability(gpu_type, data_center):
   query = """
@@ -91,10 +104,10 @@ if __name__ == "__main__":
         print(f"Availability: {availability}")
         if availability >= ALERT_THRESHOLD:
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
-          sns.publish(
-            TopicArn=SNS_TOPIC_ARN,
-            Message=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available",
-            Subject=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
+          twilio_client.messages.create(
+            to="+12025550124",
+            from_="+12025550124",
+            body=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
           )
           time.sleep(10)
     time.sleep(2)

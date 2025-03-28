@@ -5,7 +5,7 @@
 # Install dependencies
 yum install -y python3-pip
 
-pip3 install boto3 botocore requests
+pip3 install boto3 botocore requests twilio
 
 wget https://raw.githubusercontent.com/aidando73/hello-runpod-api/refs/heads/main/watch_runpod_availability.py -O /home/ec2-user/watch_runpod_availability.py
 
