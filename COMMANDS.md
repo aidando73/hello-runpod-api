@@ -26,4 +26,7 @@ tail -f /var/log/runpod-watcher.log
 sudo journalctl -u runpod-watcher
 
 vim /etc/systemd/system/runpod-watcher.service
+
+sudo systemctl daemon-reload
+sudo systemctl restart runpod-watcher
 ```
