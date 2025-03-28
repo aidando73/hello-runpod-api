@@ -39,9 +39,10 @@ from twilio.rest import Client
 
 secrets_manager = boto3.client('secretsmanager', region_name='us-east-1')
 secret_id = "arn:aws:secretsmanager:us-east-1:838892012396:secret:twillio_credentials-gJGMdi"
-accounts_sid = secrets_manager.get_secret_value(SecretId=secret_id)['SecretString'].split(',')[0]
-auth_token = secrets_manager.get_secret_value(SecretId=secret_id)['SecretString'].split(',')[1]
-phone_number = secrets_manager.get_secret_value(SecretId=secret_id)['SecretString'].split(',')[2]
+secret = json.loads(secrets_manager.get_secret_value(SecretId=secret_id)['SecretString'])
+accounts_sid = secret['account_id']
+auth_token = secret['auth_token']
+phone_number = secret['phone_number']
 
 twilio_client = Client(accounts_sid, auth_token)
 
