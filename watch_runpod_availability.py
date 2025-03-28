@@ -1,4 +1,6 @@
 
+ALERT_THRESHOLD = 8
+
 GPU_TYPES = [
     "NVIDIA H100 80GB HBM3",
 ]
@@ -47,7 +49,7 @@ def get_availability(gpu_type, data_center):
       "query": query,
       "variables": {
           "gpuTypesInput": {
-              "id": "NVIDIA H100 80GB HBM3"
+              "id": gpu_type
           },
           "lowestPriceInput": {
               "gpuCount": 1,
@@ -56,7 +58,7 @@ def get_availability(gpu_type, data_center):
               "minVcpuCount": 2,
               "secureCloud": True,
               "compliance": None,
-              "dataCenterId": "US-KS-2",
+              "dataCenterId": data_center,
               "globalNetwork": True
           }
       }
@@ -73,6 +75,9 @@ if __name__ == "__main__":
   while True:
     for gpu_type in GPU_TYPES:
       for data_center in DATA_CENTERS:
-        print(f"Checking {gpu_type} in {data_center}")
+        print(f"Checking for {gpu_type} in {data_center}")
         print(get_availability(gpu_type, data_center))
-    time.sleep(10)
+        availability = get_availability(gpu_type, data_center)
+        if availability >= ALERT_THRESHOLD:
+          print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
+    time.sleep(2)
