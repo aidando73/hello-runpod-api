@@ -26,18 +26,24 @@ from twilio.rest import Client
 
 # SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:838892012396:RunpodWatcherTopic"
 # sns = boto3.client('sns', region_name='us-east-1')
-ssm = boto3.client('ssm', region_name='us-east-1')
+# ssm = boto3.client('ssm', region_name='us-east-1')
 
-account_sid = ssm.get_parameter(
-    Name='/runpod/twilio/account_sid',
-    WithDecryption=True
-)['Parameter']['Value']
-auth_token = ssm.get_parameter(
-    Name='/runpod/twilio/auth_token',
-    WithDecryption=True
-)['Parameter']['Value']
+# account_sid = ssm.get_parameter(
+#     Name='/runpod/twilio/account_sid',
+#     WithDecryption=True
+# )['Parameter']['Value']
+# auth_token = ssm.get_parameter(
+#     Name='/runpod/twilio/auth_token',
+#     WithDecryption=True
+# )['Parameter']['Value']
 
-twilio_client = Client(account_sid, auth_token)
+secrets_manager = boto3.client('secretsmanager', region_name='us-east-1')
+secret_id = "arn:aws:secretsmanager:us-east-1:838892012396:secret:twillio_credentials-gJGMdi"
+accounts_sid = secrets_manager.get_secret_value(SecretId=secret_id)['SecretString'].split(',')[0]
+auth_token = secrets_manager.get_secret_value(SecretId=secret_id)['SecretString'].split(',')[1]
+phone_number = secrets_manager.get_secret_value(SecretId=secret_id)['SecretString'].split(',')[2]
+
+twilio_client = Client(accounts_sid, auth_token)
 
 def get_availability(gpu_type, data_center):
   query = """
@@ -105,8 +111,8 @@ if __name__ == "__main__":
         if availability >= ALERT_THRESHOLD:
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
           twilio_client.messages.create(
-            to="+12025550124",
-            from_="+12025550124",
+            to=phone_number,
+            from_="+61421229074",
             body=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
           )
           time.sleep(10)
