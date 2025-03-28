@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Install dependencies
+sudo apt-get update
+sudo apt-get install -y python3-pip
+
+wget https://raw.githubusercontent.com/aidando73/hello-runpod-api/refs/heads/main/watch_runpod_availability.py -O /home/ec2user/watch_runpod_availability.py
+
+pip install boto3 botocore requests
+
+# Create a systemd service file
+cat > /etc/systemd/system/runpod-watcher.service << 'EOL'
+[Unit]
+Description=RunPod Availability Watcher
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/ec2-user/watch_runpod_availability.py
+Restart=always
+User=ec2-user
+StandardOutput=append:/var/log/runpod-watcher.log
+StandardError=append:/var/log/runpod-watcher.log
+
+[Install]
+WantedBy=multi-user.target
+EOL
+
+systemctl enable runpod-watcher
+systemctl start runpod-watcher
