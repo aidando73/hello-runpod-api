@@ -1,4 +1,8 @@
 
+# NOTE: This file is automatically pulled from GitHub and used within this launch template:
+# https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1#LaunchTemplateDetails:launchTemplateId=lt-031648d4e4611879f
+
+
 ALERT_THRESHOLD = 8
 
 GPU_TYPES = [
