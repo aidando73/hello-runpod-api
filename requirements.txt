@@ -1,2 +1,2 @@
-runpod
 python-dotenv
+playwright
