@@ -12,6 +12,7 @@ GPU_TYPES = [
 
 DATA_CENTERS = [
     "US-KS-2",
+    "CA-MTL-3",
 ]
 
 url = "https://api.runpod.io/graphql"
