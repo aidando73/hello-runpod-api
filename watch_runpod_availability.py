@@ -119,5 +119,5 @@ if __name__ == "__main__":
             to="+61421229074",
             body=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
           )
-          time.sleep(10)
+          time.sleep(60 * 5)
     time.sleep(2)
