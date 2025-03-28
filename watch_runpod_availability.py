@@ -1,4 +1,3 @@
-
 # NOTE: This file is automatically pulled from GitHub and used within this launch template:
 # https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1#LaunchTemplateDetails:launchTemplateId=lt-031648d4e4611879f
 
@@ -85,8 +84,8 @@ if __name__ == "__main__":
     for gpu_type in GPU_TYPES:
       for data_center in DATA_CENTERS:
         print(f"Checking for {gpu_type} in {data_center}")
-        print(f"Availability: {get_availability(gpu_type, data_center)}")
         availability = get_availability(gpu_type, data_center)
+        print(f"Availability: {availability}")
         if availability >= ALERT_THRESHOLD:
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
           sns.publish(
