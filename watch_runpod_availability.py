@@ -14,6 +14,11 @@ url = "https://api.runpod.io/graphql"
 import requests
 import os
 import json
+import boto3
+
+SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:838892012396:RunpodWatcherTopic"
+
+sns = boto3.client('sns')
 
 def get_availability(gpu_type, data_center):
   query = """
@@ -80,4 +85,9 @@ if __name__ == "__main__":
         availability = get_availability(gpu_type, data_center)
         if availability >= ALERT_THRESHOLD:
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
+          sns.publish(
+            TopicArn=SNS_TOPIC_ARN,
+            Message=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available",
+            Subject=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
+          )
     time.sleep(2)
