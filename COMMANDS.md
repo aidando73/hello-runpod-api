@@ -14,18 +14,19 @@ cursor .envrc
 Runpod watcher:
 ```
 cat /var/log/cloud-init-output.log
+vim /etc/systemd/system/runpod-watcher.service
 
 vim /var/log/runpod-watcher.log
 
 sudo systemctl status runpod-watcher
 
-# Print logs in real-time
-tail -f /var/log/runpod-watcher.log
-
 # Check service logs with journalctl
 sudo journalctl -u runpod-watcher
 
-vim /etc/systemd/system/runpod-watcher.service
+sudo vim watch_runpod_availability.py
 
 sudo systemctl daemon-reload && sudo systemctl restart runpod-watcher
+
+# Print logs in real-time
+tail -f /var/log/runpod-watcher.log
 ```
