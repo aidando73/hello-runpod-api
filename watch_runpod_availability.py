@@ -2,7 +2,7 @@
 # https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1#LaunchTemplateDetails:launchTemplateId=lt-031648d4e4611879f
 
 
-ALERT_THRESHOLD = 8
+ALERT_THRESHOLD = 4
 
 GPU_TYPES = [
     "NVIDIA H100 80GB HBM3",
@@ -112,8 +112,8 @@ if __name__ == "__main__":
         if availability >= ALERT_THRESHOLD:
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
           twilio_client.messages.create(
-            to=phone_number,
-            from_="+61421229074",
+            from_=phone_number,
+            to="+61421229074",
             body=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
           )
           time.sleep(10)
