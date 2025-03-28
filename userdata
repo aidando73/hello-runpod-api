@@ -1,4 +1,6 @@
 #!/bin/bash
+# NOTE: This file is automatically pulled from GitHub and used within this launch template:
+# 
 
 # Install dependencies
 yum install -y python3-pip
