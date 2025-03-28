@@ -18,7 +18,7 @@ import boto3
 
 SNS_TOPIC_ARN = "arn:aws:sns:us-east-1:838892012396:RunpodWatcherTopic"
 
-sns = boto3.client('sns')
+sns = boto3.client('sns', region_name='us-east-1')
 
 def get_availability(gpu_type, data_center):
   query = """
