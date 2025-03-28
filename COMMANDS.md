@@ -19,5 +19,11 @@ vim /var/log/runpod-watcher.log
 
 sudo systemctl status runpod-watcher
 
+# Print logs in real-time
+tail -f /var/log/runpod-watcher.log
 
+# Check service logs with journalctl
+sudo journalctl -u runpod-watcher
+
+vim /etc/systemd/system/runpod-watcher.service
 ```
