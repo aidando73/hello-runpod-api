@@ -16,11 +16,13 @@ Description=RunPod Availability Watcher
 After=network.target
 
 [Service]
-ExecStart=/bin/bash -c '/usr/bin/python3 /home/ec2-user/watch_runpod_availability.py >> /var/log/runpod-watcher.log 2>&1'
+Type=simple
+ExecStart=/usr/bin/python3 /home/ec2-user/watch_runpod_availability.py
+Environment="PYTHONUNBUFFERED=1"
 Restart=always
 User=ec2-user
-StandardOutput=file:/var/log/runpod-watcher.log
-StandardError=file:/var/log/runpod-watcher.log
+StandardOutput=append:/var/log/runpod-watcher.log
+StandardError=append:/var/log/runpod-watcher.log
 
 [Install]
 WantedBy=multi-user.target
