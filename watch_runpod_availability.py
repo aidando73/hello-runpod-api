@@ -90,4 +90,5 @@ if __name__ == "__main__":
             Message=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available",
             Subject=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
           )
+          time.sleep(10)
     time.sleep(2)
