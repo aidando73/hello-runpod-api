@@ -112,13 +112,13 @@ if __name__ == "__main__":
     from datetime import datetime
     from datetime import timezone, timedelta
     sydney_tz = timezone(timedelta(hours=11))
-    current_time = datetime.now(sydney_tz).strftime("%Y-%m-%d %H:%M:%S")
-    print(f"\n[{current_time}] Checking GPU availability...")
+    current_time = datetime.now(sydney_tz).strftime("%d %b %H:%M:%S")
+    print(f"\n[{current_time}]")
+    print(f"{'GPU Type':<23} {'DC':<10} {'GPUs':<3}")
     for gpu_type in GPU_TYPES:
       for data_center in DATA_CENTERS:
-        print(f"Checking for {gpu_type} in {data_center}")
         availability = get_availability(gpu_type, data_center)
-        print(f"Availability: {availability}")
+        print(f"{gpu_type:<23} {data_center:<10} {availability:<3}")
         if availability >= ALERT_THRESHOLD:
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
           twilio_client.messages.create(
