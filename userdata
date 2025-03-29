@@ -21,8 +21,8 @@ ExecStart=/usr/bin/python3 /home/ec2-user/watch_runpod_availability.py
 Environment="PYTHONUNBUFFERED=1"
 Restart=always
 User=ec2-user
-StandardOutput=append:/var/log/runpod-watcher.log
-StandardError=append:/var/log/runpod-watcher.log
+StandardOutput=append:/home/ec2-user/runpod-watcher.log
+StandardError=append:/home/ec2-user/runpod-watcher.log
 
 [Install]
 WantedBy=multi-user.target
