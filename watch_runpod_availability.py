@@ -107,6 +107,13 @@ import time
 
 if __name__ == "__main__":
   while True:
+    # Print timestamp for logging purposes
+    # Set timezone to Australia/Sydney
+    from datetime import datetime
+    from datetime import timezone, timedelta
+    sydney_tz = timezone(timedelta(hours=11))
+    current_time = datetime.now(sydney_tz).strftime("%Y-%m-%d %H:%M:%S")
+    print(f"\n[{current_time}] Checking GPU availability...")
     for gpu_type in GPU_TYPES:
       for data_center in DATA_CENTERS:
         print(f"Checking for {gpu_type} in {data_center}")
