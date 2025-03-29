@@ -115,8 +115,8 @@ if __name__ == "__main__":
     current_time = datetime.now(sydney_tz).strftime("%d %b %H:%M:%S")
     print(f"\n[{current_time}]")
     print(f"{'GPU Type':<23} {'DC':<10} {'GPUs':<3}")
-    for gpu_type in GPU_TYPES:
-      for data_center in DATA_CENTERS:
+    for data_center in DATA_CENTERS:
+      for gpu_type in GPU_TYPES:
         availability = get_availability(gpu_type, data_center)
         print(f"{gpu_type:<23} {data_center:<10} {availability:<3}")
         if availability >= ALERT_THRESHOLD:
