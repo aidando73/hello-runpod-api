@@ -116,7 +116,7 @@ if __name__ == "__main__":
           print(f"Alert: {gpu_type} in {data_center} has {availability} GPUs available")
           twilio_client.messages.create(
             from_=phone_number,
-            to="+16502483062",
+            to="+61421229074",
             body=f"Alert: {gpu_type} in {data_center} has {availability} GPUs available"
           )
           time.sleep(60 * 5)
